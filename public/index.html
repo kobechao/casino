@@ -1,10 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Casino</title>
-</head>
-<body>
-  <h1>Casino!!</h1>
-</body>
+  <head>
+    <meta charset="UTF-8">
+    <title>Casino</title>
+    <link rel="shortcut icon" href="">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+
+
+    <link rel="stylesheet" href="css/index.css">
+
+    <script>
+$(document).ready(function(){
+
+  $('#logoutButton').on('click', function(e){
+    document.cookie = "name=";
+    document.cookie = "userName=";
+    document.cookie = "token=";
+    document.cookie = 'expires=';
+    window.location.href='/login';
+  });
+
+
+  Object.defineProperty(window, "Cookies", {
+    get: function() {
+      return document.cookie.split(';').reduce(function(cookies, cookie) {
+        cookies[cookie.split("=")[0].replace(/ /g,'')] = unescape(cookie.split("=")[1]);
+        return cookies
+      }, {});
+    }
+  });
+
+  $("#greetingName").text(Cookies.userName);
+
+});
+    </script>
+  </head>
+  <body>
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Casino!</a>
+        </div>
+        <center>
+          <div class="navbar-collapse collapse" id="navbar-main">
+
+            <form class="navbar-form navbar-right" role="search">
+              Hi, <span id="greetingName"> hidw</span>
+              <button type="button" class="btn btn-default" id="logoutButton">Log Out</button>
+          </div>
+        </center>
+      </div>
+    </div>
+    <div class="container" id="main">
+
+    </div>
+  </body>
 </html>

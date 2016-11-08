@@ -14,6 +14,10 @@ const apiRoutes = express.Router();
 
 const db = monk(config.database);
 
+app.use('/js', express.static(__dirname + '/node_modules/jquery/dist'));
+app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js'));
+app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); 
+app.use('/css', express.static(__dirname + '/public/css')); 
 
 app.use((req,res,next) => {
   req.db = db;
@@ -39,26 +43,22 @@ app.all('/',(req, res, next) => {
     });
 
   } else {
-    console.log("hi in false")
     res.redirect('/login');
   }
 });
 
 app.get('/login', (req, res) => {
-  console.log("get login")
   res.sendFile(__dirname + '/public/login.html')
 });
 
 app.get('/', (req, res) => {
-  // res.end("hi")
-  console.log(req.decoded);
   res.sendFile(__dirname + '/public/index.html')
 });
+
 app.get('/users', (req, res, next) => {
   const usersDB = db.get('users');
 
   usersDB.find({}).then((docs) => {
-
 
     res.json(docs);
   })
